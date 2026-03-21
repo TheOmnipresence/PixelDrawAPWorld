@@ -26,6 +26,16 @@ class TrapChance(Range):
     default = 0
 
 
+class ActionsNeeded(Range):
+
+
+    display_name = "Actions Needed"
+
+    range_start = 0
+    range_end = 39
+    default = 39
+
+
 class DeathLink(Toggle):
     """
     Whether or not deathlink will be used.
@@ -51,26 +61,27 @@ class PixelDrawOptions(PerGameCommonOptions):
     trap_chance: TrapChance
     death_link: DeathLink
     randomize_enemy_deaths: RandomizeEnemyDeath
+    actions_needed: ActionsNeeded
 
 
-# If we want to group our options by similar type, we can do so as well. This looks nice on the website.
 option_groups = [
     OptionGroup(
         "Gameplay Options",
-        [TrapChance, DeathLink, RandomizeEnemyDeath],
+        [TrapChance, DeathLink, RandomizeEnemyDeath, ActionsNeeded],
     ),
 ]
 
-# Finally, we can define some option presets if we want the player to be able to quickly choose a specific "mode".
 option_presets = {
     "normal": {
         "trap_chance": 0,
         "death_link": False,
         "randomize_enemy_deaths": False,
+        "actions_needed": 25,
     },
     "harder": {
         "trap_chance": 50,
         "death_link": True,
         "randomize_enemy_deaths": True,
+        "actions_needed": 39,
     },
 }
