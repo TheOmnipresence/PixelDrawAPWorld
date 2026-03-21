@@ -36,19 +36,28 @@ class DeathLink(Toggle):
     default = 0
 
 
+class RandomizeEnemyDeath(Toggle):
+    """
+    Adds locations for killing enemies.
+    """
+
+    display_name = "Randomize Enemy Death"
+
+
 # We must now define a dataclass inheriting from PerGameCommonOptions that we put all our options in.
 # This is in the format "option_name_in_snake_case: OptionClassName".
 @dataclass
 class PixelDrawOptions(PerGameCommonOptions):
     trap_chance: TrapChance
     death_link: DeathLink
+    randomize_enemy_deaths: RandomizeEnemyDeath
 
 
 # If we want to group our options by similar type, we can do so as well. This looks nice on the website.
 option_groups = [
     OptionGroup(
         "Gameplay Options",
-        [TrapChance, DeathLink],
+        [TrapChance, DeathLink, RandomizeEnemyDeath],
     ),
 ]
 
@@ -57,9 +66,11 @@ option_presets = {
     "normal": {
         "trap_chance": 0,
         "death_link": False,
+        "randomize_enemy_deaths": False,
     },
     "harder": {
         "trap_chance": 50,
         "death_link": True,
+        "randomize_enemy_deaths": True,
     },
 }

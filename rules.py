@@ -95,6 +95,11 @@ def set_all_location_rules(world: PixelDrawWorld) -> None:
     set_rule(world.get_location("200_SQR"), lambda state: fifty_size(state) and manipulators(state))
     set_rule(world.get_location("8_CIR"), lambda state: four_size(state) and manipulators(state))
 
+    if world.options.randomize_enemy_deaths:
+        set_rule(world.get_location("RED_PILL"), lambda state: (four_size(state) or state.has_any(["5_SQC","5_TRI"], world.player)) and manipulators(state) and state.has("BASE_SW",world.player))
+        set_rule(world.get_location("TRI_ENEMY"), lambda state: state.has("BASE_SW", world.player))
+        set_rule(world.get_location("ZOOM_ENEMY"), lambda state: state.has("BASE_SW", world.player))
+        set_rule(world.get_location("SMALL_BIRD"), lambda state: state.has("BASE_SW", world.player))
 
 def set_completion_condition(world: PixelDrawWorld) -> None:
     manipulators = (lambda state: can_use_tool(world,"SHUFFLER") or can_use_tool(world,"PLATFORMS") or (can_use_tool(world,"MC_PICK") and can_use_tool(world,"PLACER")) or (can_use_tool(world,"STAMPER") and can_use_tool(world,"C_GOL")))
