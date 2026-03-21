@@ -104,7 +104,7 @@ DEFAULT_ITEM_CLASSIFICATIONS = {
     "C_GOL": ItemClassification.progression,
     "RAISER": ItemClassification.useful,
     "LEVELER": ItemClassification.useful,
-    "DUSTER": ItemClassification.useful,
+    "DUSTER": ItemClassification.progression,
     "SHUFFLER": ItemClassification.progression,
     "STOPPER": ItemClassification.useful,
     "BULB": ItemClassification.useful,
