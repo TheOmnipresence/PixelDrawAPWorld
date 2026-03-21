@@ -35,11 +35,6 @@ toolsCompatibility = {
 
 
 def set_all_rules(world: PixelDrawWorld) -> None:
-    # In order for AP to generate an item layout that is actually possible for the player to complete,
-    # we need to define rules for our Entrances and Locations.
-    # Note: Regions do not have rules, the Entrances connecting them do!
-    # We'll do entrances first, then locations, and then finally we set our victory condition.
-
     set_all_entrance_rules(world)
     set_all_location_rules(world)
     set_completion_condition(world)
@@ -105,4 +100,3 @@ def set_completion_condition(world: PixelDrawWorld) -> None:
     manipulators = (lambda state: can_use_tool(world,"SHUFFLER") or can_use_tool(world,"PLATFORMS") or (can_use_tool(world,"MC_PICK") and can_use_tool(world,"PLACER")) or (can_use_tool(world,"STAMPER") and can_use_tool(world,"C_GOL")))
 
     world.multiworld.completion_condition[world.player] = lambda state: state.has_all(["5_SQR","50_SQR"], world.player) and manipulators(state)
-    #world.multiworld.completion_condition[world.player] = lambda state: state.has("Won", world.player)
