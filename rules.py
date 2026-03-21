@@ -71,7 +71,7 @@ def set_all_location_rules(world: PixelDrawWorld) -> None:
     #manipulators = (lambda state: can_use_tool(world,"SHUFFLER") or can_use_tool(world,"PLATFORMS") or (can_use_tool(world,"MC_PICK") and can_use_tool(world,"PLACER")) or (can_use_tool(world,"STAMPER") and can_use_tool(world,"C_GOL")))
     manipulators = (lambda state: can_use_tool(world, "SHUFFLER")(state) or can_use_tool(world, "PLATFORMS")(state) or (can_use_tool(world, "MC_PICK")(state) and can_use_tool(world, "PLACER")(state)) or (can_use_tool(world, "STAMPER")(state) and can_use_tool(world, "C_GOL")(state)))
 
-    fifty_size = (lambda state: state.has_any(["50_SQR","200_SQR"], world.player))
+    fifty_size = (lambda state: state.has_any(["50_SQR"], world.player))
     eight_size = (lambda state: state.has_any(["10_SQR","16_SQR"], world.player))
     seven_size = (lambda state: state.has_any([], world.player) or eight_size(state))
     six_size = (lambda state: state.has_any(["6_SQR"], world.player) or seven_size(state))
@@ -92,7 +92,7 @@ def set_all_location_rules(world: PixelDrawWorld) -> None:
     set_rule(world.get_location("50_SQR"), lambda state: five_size(state) and manipulators(state))
     set_rule(world.get_location("7_LOOP"), lambda state: five_size(state) and manipulators(state))
     set_rule(world.get_location("PLATFORMS"), lambda state: five_size(state) and manipulators(state))
-    set_rule(world.get_location("200_SQR"), lambda state: fifty_size(state) and manipulators(state))
+    #set_rule(world.get_location("200_SQR"), lambda state: fifty_size(state) and manipulators(state))
     set_rule(world.get_location("8_CIR"), lambda state: four_size(state) and manipulators(state))
 
     if world.options.randomize_enemy_deaths:
@@ -104,5 +104,5 @@ def set_all_location_rules(world: PixelDrawWorld) -> None:
 def set_completion_condition(world: PixelDrawWorld) -> None:
     manipulators = (lambda state: can_use_tool(world,"SHUFFLER") or can_use_tool(world,"PLATFORMS") or (can_use_tool(world,"MC_PICK") and can_use_tool(world,"PLACER")) or (can_use_tool(world,"STAMPER") and can_use_tool(world,"C_GOL")))
 
-    world.multiworld.completion_condition[world.player] = lambda state: state.has_any(["5_SQR","50_SQR","200_SQR"], world.player) and manipulators(state)
+    world.multiworld.completion_condition[world.player] = lambda state: state.has_all(["5_SQR","50_SQR"], world.player) and manipulators(state)
     #world.multiworld.completion_condition[world.player] = lambda state: state.has("Won", world.player)
