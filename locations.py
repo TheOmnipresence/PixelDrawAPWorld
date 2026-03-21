@@ -1,0 +1,97 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
+from BaseClasses import ItemClassification, Location
+
+from . import items
+
+if TYPE_CHECKING:
+    from .world import PixelDrawWorld
+
+# Every location must have a unique integer ID associated with it.
+# We will have a lookup from location name to ID here that, in world.py, we will import and bind to the world class.
+# Even if a location doesn't exist on specific options, it must be present in this lookup.
+LOCATION_NAME_TO_ID : dict[str, int | None] = {
+    "C_GOL": 3,
+    "RAISER": 4,
+    "LEVELER": 5,
+    "DUSTER": 6,
+    "SHUFFLER": 7,
+    "STOPPER": 8,
+    "BULB": 9,
+    "MC_PICK": 10,
+    "HOOK": 11,
+    "BASE_SW": 12,
+    "PLACER": 13,
+    "STAMPER": 14,
+    "GRAVITATE": 15,
+    "SUMMON": 16,
+    "TERRAIN": 17,
+    "PARALYZER": 18,
+    "PLATFORMS": 19,
+
+    "5_SQR": 1002,
+    "6_SQR": 1003,
+    "SM_DIA": 1004,
+    "5_PLUS": 1005,
+    "3_DIAG": 1006,
+    "3_DIAG_IN": 1007,
+    "7_LINE": 1008,
+    "5_SQC": 1009,
+    "10_SQR": 1010,
+    "5_DIAG": 1011,
+    "16_SQR": 1012,
+    "5_TRI": 1013,
+    "50_SQR": 1014,
+    "200_SQR": 1015,
+    "7_LOOP": 1016,
+    "7_SQC": 1017,
+    "8_CIR": 1018,
+}
+
+
+# Each Location instance must correctly report the "game" it belongs to.
+# To make this simple, it is common practice to subclass the basic Location class and override the "game" field.
+class PixelDrawLocation(Location):
+    game = "PixelDraw"
+
+
+# Let's make one more helper method before we begin actually creating locations.
+# Later on in the code, we'll want specific subsections of LOCATION_NAME_TO_ID.
+# To reduce the chance of copy-paste errors writing something like {"Chest": LOCATION_NAME_TO_ID["Chest"]},
+# let's make a helper method that takes a list of location names and returns them as a dict with their IDs.
+# Note: There is a minor typing quirk here. Some functions want location addresses to be an "int | None",
+# so while our function here only ever returns dict[str, int], we annotate it as dict[str, int | None].
+def get_location_names_with_ids(location_names: list[str]) -> dict[str, int | None]:
+    return {location_name: LOCATION_NAME_TO_ID[location_name] for location_name in location_names}
+
+
+def create_all_locations(world: PixelDrawWorld) -> None:
+    create_regular_locations(world)
+    create_events(world)
+
+
+def create_regular_locations(world: PixelDrawWorld) -> None:
+    # Finally, we need to put the Locations ("checks") into their regions.
+    # Once again, before we do anything, we can grab our regions we created by using world.get_region()
+    plane = world.get_region("Plane")
+    plane.add_locations(LOCATION_NAME_TO_ID, PixelDrawLocation)
+
+
+    # A simpler way to do this is by using the region.add_locations helper.
+    # For this, you need to have a dict of location names to their IDs (i.e. a subset of location_name_to_id)
+    # Aha! So that's why we made that "get_location_names_with_ids" helper method earlier.
+    # You also need to pass your overridden Location class.
+    #bottom_right_room_locations = get_location_names_with_ids(
+        #["Bottom Right Room Left Chest", "Bottom Right Room Right Chest"]
+    #)
+    #bottom_right_room.add_locations(bottom_right_room_locations, PixelDrawLocation)
+
+
+def create_events(world: PixelDrawWorld) -> None:
+    return
+    plane = world.get_region("Plane")
+    plane.add_event(
+        "All Effects", "Won", location_type=PixelDrawLocation, item_type=items.PixelDrawItem
+    )
