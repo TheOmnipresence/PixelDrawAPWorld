@@ -138,6 +138,7 @@ DEFAULT_ITEM_CLASSIFICATIONS = {
     "8_CIR": ItemClassification.useful,
 
     "RANDOM_ACTION": ItemClassification.filler,
+    "RANDOM_ENEMY": ItemClassification.trap,
 }
 
 
@@ -146,6 +147,8 @@ class PixelDrawItem(Item):
 
 
 def get_random_filler_item_name(world: PixelDrawWorld) -> str:
+    if world.random.randint(0, 99) < world.options.trap_chance:
+        return "RANDOM_ENEMY"
     return "RANDOM_ACTION"
 
 
