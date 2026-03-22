@@ -73,6 +73,7 @@ NORMAL_LOCATIONS = {
     "TERRAIN": 17,
     "PARALYZER": 18,
     "PLATFORMS": 19,
+    "PLAGUE": 20,
 
     "5_SQR": 1002,
     "6_SQR": 1003,

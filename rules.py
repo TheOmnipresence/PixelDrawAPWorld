@@ -31,6 +31,7 @@ toolsCompatibility = {
 	"TERRAIN":[		"NONE",						"5_SQR",																																		"50_SQR",	"200_SQR",													],
 	"PARALYZER":[	"NONE",																																																"7_SQC",							"12_DIA",	],
 	"PLATFORMS":[	"NONE",																																										"50_SQR",				"7_SQC",	"8_CIR",							],
+    "PLAGUE":[		"NONE",																																	"10_SQR",																			"10_TRI",				],
 }
 
 
@@ -68,7 +69,7 @@ def set_all_location_rules(world: PixelDrawWorld) -> None:
         can_use_tool(world, "SHUFFLER")(state) or
         can_use_tool(world, "PLATFORMS")(state) or
         (can_use_tool(world, "MC_PICK")(state) and can_use_tool(world, "PLACER")(state)) or
-        (can_use_tool(world, "STAMPER")(state) and can_use_tool(world, "C_GOL")(state) and can_use_tool(world,"DUSTER")(state))
+        (can_use_tool(world, "STAMPER")(state) and ((can_use_tool(world, "C_GOL")(state) and can_use_tool(world,"DUSTER")(state)) or can_use_tool(world, "PLAGUE")(state)))
     )
 
     fifty_size = (lambda state: state.has_any(["50_SQR"], world.player))
@@ -96,6 +97,7 @@ def set_all_location_rules(world: PixelDrawWorld) -> None:
     set_rule(world.get_location("8_CIR"), lambda state: four_size(state) and manipulators(state))
     set_rule(world.get_location("10_TRI"), lambda state: (five_size(state) or state.has("5_TRI",world.player)) and manipulators(state))
     set_rule(world.get_location("12_DIA"), lambda state: five_size(state) and manipulators(state))
+    set_rule(world.get_location("PLAGUE"), lambda state: (five_size(state) or state.has_any(["5_SQC"], world.player)) and manipulators(state))
 
     if world.options.randomize_enemy_deaths:
         set_rule(world.get_location("RED_PILL"), lambda state: (four_size(state) or state.has_any(["5_SQC","5_TRI"], world.player)) and manipulators(state) and state.has("BASE_SW",world.player))
@@ -104,6 +106,11 @@ def set_all_location_rules(world: PixelDrawWorld) -> None:
         set_rule(world.get_location("SMALL_BIRD"), lambda state: state.has("BASE_SW", world.player))
 
 def set_completion_condition(world: PixelDrawWorld) -> None:
-    manipulators = (lambda state: can_use_tool(world, "SHUFFLER")(state) or can_use_tool(world, "PLATFORMS")(state) or (can_use_tool(world, "MC_PICK")(state) and can_use_tool(world, "PLACER")(state)) or (can_use_tool(world, "STAMPER")(state) and can_use_tool(world, "C_GOL")(state) and can_use_tool(world,"DUSTER")(state)))
+    manipulators = (lambda state:
+        can_use_tool(world, "SHUFFLER")(state) or
+        can_use_tool(world, "PLATFORMS")(state) or
+        (can_use_tool(world, "MC_PICK")(state) and can_use_tool(world, "PLACER")(state)) or
+        (can_use_tool(world, "STAMPER")(state) and ((can_use_tool(world, "C_GOL")(state) and can_use_tool(world, "DUSTER")(state)) or can_use_tool(world, "PLAGUE")(state)))
+    )
 
     world.multiworld.completion_condition[world.player] = lambda state: state.has_all(["5_SQR","50_SQR"], world.player) and manipulators(state)

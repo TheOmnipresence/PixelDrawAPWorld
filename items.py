@@ -28,6 +28,7 @@ ITEM_NAME_TO_ID = {
     "TERRAIN": 17,
     "PARALYZER": 18,
     "PLATFORMS": 19,
+    "PLAGUE": 20,
 
     "5_SQR": 1002,
     "6_SQR": 1003,
@@ -120,6 +121,7 @@ DEFAULT_ITEM_CLASSIFICATIONS = {
     "TERRAIN": ItemClassification.useful,
     "PARALYZER": ItemClassification.useful,
     "PLATFORMS": ItemClassification.progression,
+    "PLAGUE": ItemClassification.progression,
 
     "5_SQR": ItemClassification.progression,
     "6_SQR": ItemClassification.progression,
@@ -161,7 +163,7 @@ def create_item_with_correct_classification(world: PixelDrawWorld, name: str) ->
 
 
 def create_all_items(world: PixelDrawWorld) -> None:
-    baseitempool = ["C_GOL","RAISER","LEVELER","DUSTER","SHUFFLER","STOPPER","BULB","MC_PICK","HOOK","BASE_SW","PLACER","STAMPER","GRAVITATE","SUMMON","TERRAIN","PARALYZER","PLATFORMS","5_SQR","6_SQR","SM_DIA","5_PLUS","3_DIAG","3_DIAG_IN","7_LINE","5_SQC","10_SQR","5_DIAG","16_SQR","5_TRI","50_SQR","7_LOOP","7_SQC","8_CIR","10_TRI","12_DIA"]
+    baseitempool = ["C_GOL","RAISER","LEVELER","DUSTER","SHUFFLER","STOPPER","BULB","MC_PICK","HOOK","BASE_SW","PLACER","STAMPER","GRAVITATE","SUMMON","TERRAIN","PARALYZER","PLATFORMS","PLAGUE","5_SQR","6_SQR","SM_DIA","5_PLUS","3_DIAG","3_DIAG_IN","7_LINE","5_SQC","10_SQR","5_DIAG","16_SQR","5_TRI","50_SQR","7_LOOP","7_SQC","8_CIR","10_TRI","12_DIA"]
     itempool: list[Item] = []
     for item in baseitempool:
         itempool.append(world.create_item(item))
