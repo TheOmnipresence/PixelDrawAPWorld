@@ -14,23 +14,23 @@ toolsCompatibility = {
 	"NONE":[],
 	"VOIDER":[],
 	"ERASER":[],
-	"C_GOL":[		"NONE",		"BASE_RECT",	"5_SQR",	"6_SQR"																																									],
-	"RAISER":[		"NONE",												"SM_DIA",	"5_PLUS",													"5_SQC"																				],
-	"LEVELER":[		"NONE",		"BASE_RECT",	"5_SQR",																															"5_TRI"											],
-	"DUSTER":[		"NONE",		"BASE_RECT",				"6_SQR"																																									],
-	"SHUFFLER":[	"NONE",						"5_SQR"																																												],
-	"STOPPER":[		"NONE",												"SM_DIA",												"7_LINE"																							],
-	"BULB":[		"NONE",															"5_PLUS",		"3_DIAG",	"3_DIAG_IN"																											],
-	"MC_PICK":[		"NONE",																										"7_LINE"																							],
-	"HOOK":[		"NONE",									"6_SQR",																			"5_SQC"																				],
-	"BASE_SW":[		"NONE",																			"3_DIAG",	"3_DIAG_IN",											"5_DIAG"													],
-	"PLACER":[		"NONE",																			"3_DIAG",	"3_DIAG_IN"																											],
-	"STAMPER":[		"NONE",									"6_SQR"																																									],
-	"GRAVITATE":[	"NONE",																																							"5_TRI"											],
-	"SUMMON":[		"NONE",						"5_SQR",																									"10_SQR"																],
-	"TERRAIN":[		"NONE",						"5_SQR",																																		"50_SQR",	"200_SQR",				],
-	"PARALYZER":[	"NONE",																																																"7_SQC",	],
-	"PLATFORMS":[	"NONE",																																										        				"7_SQC",	],
+	"C_GOL":[		"NONE",		"BASE_RECT",	"5_SQR",	"6_SQR"																																												],
+	"RAISER":[		"NONE",												"SM_DIA",	"5_PLUS",													"5_SQC"																							],
+	"LEVELER":[		"NONE",		"BASE_RECT",	"5_SQR",																															"5_TRI"														],
+	"DUSTER":[		"NONE",		"BASE_RECT",				"6_SQR",																																								"8_CIR",	],
+	"SHUFFLER":[	"NONE",						"5_SQR"																																															],
+	"STOPPER":[		"NONE",												"SM_DIA",												"7_LINE"																										],
+	"BULB":[		"NONE",															"5_PLUS",		"3_DIAG",	"3_DIAG_IN"																														],
+	"MC_PICK":[		"NONE",																										"7_LINE"																										],
+	"HOOK":[		"NONE",									"6_SQR",																			"5_SQC"																							],
+	"BASE_SW":[		"NONE",																			"3_DIAG",	"3_DIAG_IN",											"5_DIAG"																],
+	"PLACER":[		"NONE",																			"3_DIAG",	"3_DIAG_IN"																														],
+	"STAMPER":[		"NONE",									"6_SQR"																																												],
+	"GRAVITATE":[	"NONE",																																							"5_TRI"														],
+	"SUMMON":[		"NONE",						"5_SQR",																									"10_SQR"																			],
+	"TERRAIN":[		"NONE",						"5_SQR",																																		"50_SQR",	"200_SQR",							],
+	"PARALYZER":[	"NONE",																																																"7_SQC",				],
+	"PLATFORMS":[	"NONE",																																										"50_SQR",				"7_SQC",				],
 }
 
 
@@ -57,14 +57,19 @@ def can_use_tool(world: PixelDrawWorld,tool:str) -> typing.Callable:
     if not result:
         return lambda state: False
     else:
-        return lambda state: state.has_any(result, world.player) and state.has(tool, world.player)
+        return lambda state: (state.has_any(result, world.player) and state.has(tool, world.player))
 
 
 
 def set_all_location_rules(world: PixelDrawWorld) -> None:
-    # shuffler or (mc_pick and placer) or (stamper and c_gol) or platforms
+    # shuffler or (mc_pick and placer) or (stamper and c_gol and duster) or platforms
     #manipulators = (lambda state: can_use_tool(world,"SHUFFLER") or can_use_tool(world,"PLATFORMS") or (can_use_tool(world,"MC_PICK") and can_use_tool(world,"PLACER")) or (can_use_tool(world,"STAMPER") and can_use_tool(world,"C_GOL")))
-    manipulators = (lambda state: can_use_tool(world, "SHUFFLER")(state) or can_use_tool(world, "PLATFORMS")(state) or (can_use_tool(world, "MC_PICK")(state) and can_use_tool(world, "PLACER")(state)) or (can_use_tool(world, "STAMPER")(state) and can_use_tool(world, "C_GOL")(state) and can_use_tool(world,"DUSTER")(state)))
+    manipulators = (lambda state:
+        can_use_tool(world, "SHUFFLER")(state) or
+        can_use_tool(world, "PLATFORMS")(state) or
+        (can_use_tool(world, "MC_PICK")(state) and can_use_tool(world, "PLACER")(state)) or
+        (can_use_tool(world, "STAMPER")(state) and can_use_tool(world, "C_GOL")(state) and can_use_tool(world,"DUSTER")(state))
+    )
 
     fifty_size = (lambda state: state.has_any(["50_SQR"], world.player))
     eight_size = (lambda state: state.has_any(["10_SQR","16_SQR"], world.player))
