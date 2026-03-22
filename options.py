@@ -17,13 +17,15 @@ class TrapChance(Range):
 
 
 class ActionsNeeded(Range):
-
+    """
+    The amount of actions needed to goal. If this is 37 or less, it is possible to win without any checks.
+    """
 
     display_name = "Actions Needed"
 
     range_start = 0
-    range_end = 39
-    default = 39
+    range_end = 52
+    default = 40
 
 
 class DeathLink(Toggle):
@@ -64,12 +66,12 @@ option_presets = {
         "trap_chance": 0,
         "death_link": False,
         "randomize_enemy_deaths": False,
-        "actions_needed": 25,
+        "actions_needed": 40,
     },
     "harder": {
         "trap_chance": 50,
         "death_link": True,
         "randomize_enemy_deaths": True,
-        "actions_needed": 39,
+        "actions_needed": 50,
     },
 }
