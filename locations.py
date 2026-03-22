@@ -91,6 +91,8 @@ NORMAL_LOCATIONS = {
     "7_LOOP": 1016,
     "7_SQC": 1017,
     "8_CIR": 1018,
+    "10_TRI": 1019,
+    "12_DIA": 1020,
 }
 
 ENEMY_LOCATIONS = {

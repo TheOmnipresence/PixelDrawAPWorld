@@ -46,6 +46,8 @@ ITEM_NAME_TO_ID = {
     "7_LOOP": 1016,
     "7_SQC": 1017,
     "8_CIR": 1018,
+    "10_TRI": 1019,
+    "12_DIA": 1020,
 
     #"CREEPER": 2001,
     #"RESPAWN": 2002,
@@ -136,6 +138,8 @@ DEFAULT_ITEM_CLASSIFICATIONS = {
     "7_LOOP": ItemClassification.useful,
     "7_SQC": ItemClassification.useful,
     "8_CIR": ItemClassification.useful,
+    "10_TRI": ItemClassification.useful,
+    "12_DIA": ItemClassification.useful,
 
     "RANDOM_ACTION": ItemClassification.filler,
     "RANDOM_ENEMY": ItemClassification.trap,
@@ -157,7 +161,7 @@ def create_item_with_correct_classification(world: PixelDrawWorld, name: str) ->
 
 
 def create_all_items(world: PixelDrawWorld) -> None:
-    baseitempool = ["C_GOL","RAISER","LEVELER","DUSTER","SHUFFLER","STOPPER","BULB","MC_PICK","HOOK","BASE_SW","PLACER","STAMPER","GRAVITATE","SUMMON","TERRAIN","PARALYZER","PLATFORMS","5_SQR","6_SQR","SM_DIA","5_PLUS","3_DIAG","3_DIAG_IN","7_LINE","5_SQC","10_SQR","5_DIAG","16_SQR","5_TRI","50_SQR","7_LOOP","7_SQC","8_CIR"]
+    baseitempool = ["C_GOL","RAISER","LEVELER","DUSTER","SHUFFLER","STOPPER","BULB","MC_PICK","HOOK","BASE_SW","PLACER","STAMPER","GRAVITATE","SUMMON","TERRAIN","PARALYZER","PLATFORMS","5_SQR","6_SQR","SM_DIA","5_PLUS","3_DIAG","3_DIAG_IN","7_LINE","5_SQC","10_SQR","5_DIAG","16_SQR","5_TRI","50_SQR","7_LOOP","7_SQC","8_CIR","10_TRI","12_DIA"]
     itempool: list[Item] = []
     for item in baseitempool:
         itempool.append(world.create_item(item))

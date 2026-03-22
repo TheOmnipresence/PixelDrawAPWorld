@@ -14,23 +14,23 @@ toolsCompatibility = {
 	"NONE":[],
 	"VOIDER":[],
 	"ERASER":[],
-	"C_GOL":[		"NONE",		"BASE_RECT",	"5_SQR",	"6_SQR"																																												],
-	"RAISER":[		"NONE",												"SM_DIA",	"5_PLUS",													"5_SQC"																							],
-	"LEVELER":[		"NONE",		"BASE_RECT",	"5_SQR",																															"5_TRI"														],
-	"DUSTER":[		"NONE",		"BASE_RECT",				"6_SQR",																																								"8_CIR",	],
-	"SHUFFLER":[	"NONE",						"5_SQR"																																															],
-	"STOPPER":[		"NONE",												"SM_DIA",												"7_LINE"																										],
-	"BULB":[		"NONE",															"5_PLUS",		"3_DIAG",	"3_DIAG_IN"																														],
-	"MC_PICK":[		"NONE",																										"7_LINE"																										],
-	"HOOK":[		"NONE",									"6_SQR",																			"5_SQC"																							],
-	"BASE_SW":[		"NONE",																			"3_DIAG",	"3_DIAG_IN",											"5_DIAG"																],
-	"PLACER":[		"NONE",																			"3_DIAG",	"3_DIAG_IN"																														],
-	"STAMPER":[		"NONE",									"6_SQR"																																												],
-	"GRAVITATE":[	"NONE",																																							"5_TRI"														],
-	"SUMMON":[		"NONE",						"5_SQR",																									"10_SQR"																			],
-	"TERRAIN":[		"NONE",						"5_SQR",																																		"50_SQR",	"200_SQR",							],
-	"PARALYZER":[	"NONE",																																																"7_SQC",				],
-	"PLATFORMS":[	"NONE",																																										"50_SQR",				"7_SQC",				],
+	"C_GOL":[		"NONE",		"BASE_RECT",	"5_SQR",	"6_SQR"																																																		],
+	"RAISER":[		"NONE",												"SM_DIA",	"5_PLUS",													"5_SQC"																													],
+	"LEVELER":[		"NONE",		"BASE_RECT",	"5_SQR",																															"5_TRI"																				],
+	"DUSTER":[		"NONE",		"BASE_RECT",				"6_SQR",																																								"8_CIR",							],
+	"SHUFFLER":[	"NONE",						"5_SQR"																																																					],
+	"STOPPER":[		"NONE",												"SM_DIA",												"7_LINE"																																],
+	"BULB":[		"NONE",															"5_PLUS",		"3_DIAG",	"3_DIAG_IN",																																"12_DIA",	],
+	"MC_PICK":[		"NONE",																										"7_LINE"																																],
+	"HOOK":[		"NONE",									"6_SQR",																			"5_SQC",																						"10_TRI",				],
+	"BASE_SW":[		"NONE",																			"3_DIAG",	"3_DIAG_IN",											"5_DIAG"																						],
+	"PLACER":[		"NONE",																			"3_DIAG",	"3_DIAG_IN",																																			],
+	"STAMPER":[		"NONE",									"6_SQR"																																																		],
+	"GRAVITATE":[	"NONE",																																							"5_TRI",													"10_TRI",				],
+	"SUMMON":[		"NONE",						"5_SQR",																									"10_SQR",																						"12_DIA",	],
+	"TERRAIN":[		"NONE",						"5_SQR",																																		"50_SQR",	"200_SQR",													],
+	"PARALYZER":[	"NONE",																																																"7_SQC",							"12_DIA",	],
+	"PLATFORMS":[	"NONE",																																										"50_SQR",				"7_SQC",	"8_CIR",							],
 }
 
 
@@ -94,6 +94,8 @@ def set_all_location_rules(world: PixelDrawWorld) -> None:
     set_rule(world.get_location("PLATFORMS"), lambda state: five_size(state) and manipulators(state))
     #set_rule(world.get_location("200_SQR"), lambda state: fifty_size(state) and manipulators(state))
     set_rule(world.get_location("8_CIR"), lambda state: four_size(state) and manipulators(state))
+    set_rule(world.get_location("10_TRI"), lambda state: (five_size(state) or state.has("5_TRI",world.player)) and manipulators(state))
+    set_rule(world.get_location("12_DIA"), lambda state: five_size(state) and manipulators(state))
 
     if world.options.randomize_enemy_deaths:
         set_rule(world.get_location("RED_PILL"), lambda state: (four_size(state) or state.has_any(["5_SQC","5_TRI"], world.player)) and manipulators(state) and state.has("BASE_SW",world.player))
