@@ -30,6 +30,7 @@ LOCATION_NAME_TO_ID : dict[str, int | None] = {
     "TERRAIN": 17,
     "PARALYZER": 18,
     "PLATFORMS": 19,
+    "PLAGUE": 20,
 
     "5_SQR": 1002,
     "6_SQR": 1003,
