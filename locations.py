@@ -49,6 +49,8 @@ LOCATION_NAME_TO_ID : dict[str, int | None] = {
     "7_LOOP": 1016,
     "7_SQC": 1017,
     "8_CIR": 1018,
+    "10_TRI": 1019,
+    "12_DIA": 1020,
 
     "RED_PILL": 2000,
     "TRI_ENEMY": 2001,
