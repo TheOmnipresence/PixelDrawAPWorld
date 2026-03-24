@@ -54,7 +54,7 @@ def can_use_tool(world: PixelDrawWorld,tool:str) -> typing.Callable:
             case "BASE_RECT":
                 return lambda state: True
             case _:
-                result.append(toolshape)
+                if toolshape != "200_SQR" and toolshape != "50_SQR": result.append(toolshape)
     if not result:
         return lambda state: False
     else:
