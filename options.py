@@ -24,7 +24,7 @@ class ActionsNeeded(Range):
     display_name = "Actions Needed"
 
     range_start = 0
-    range_end = 52
+    range_end = 53
     default = 40
 
 
