@@ -69,7 +69,7 @@ def set_all_location_rules(world: PixelDrawWorld) -> None:
         can_use_tool(world, "SHUFFLER")(state) or
         can_use_tool(world, "PLATFORMS")(state) or
         (can_use_tool(world, "MC_PICK")(state) and can_use_tool(world, "PLACER")(state)) or
-        (can_use_tool(world, "STAMPER")(state) and ((can_use_tool(world, "C_GOL")(state) and can_use_tool(world,"DUSTER")(state)) or can_use_tool(world, "PLAGUE")(state)))
+        (can_use_tool(world, "STAMPER")(state) and ((can_use_tool(world, "C_GOL")(state) and can_use_tool(world,"DUSTER")(state)) or can_use_tool(world, "PLAGUE")(state) or can_use_tool(world, "MC_PICK")(state)))
     )
 
     fifty_size = (lambda state: state.has_any(["50_SQR"], world.player))
