@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 
-from Options import Choice, OptionGroup, PerGameCommonOptions, Range, Toggle
-
+from Options import Choice, OptionGroup, PerGameCommonOptions, Range, Toggle, FreeText, NamedRange, OptionList, OptionSet
 
 
 class TrapChance(Range):
@@ -16,7 +15,7 @@ class TrapChance(Range):
     default = 0
 
 
-class ActionsNeeded(Range):
+class ActionsNeeded(NamedRange):
     """
     The amount of actions needed to goal. If this is 37 or less, it is possible to win without any checks.
     """
@@ -24,7 +23,13 @@ class ActionsNeeded(Range):
     display_name = "Actions Needed"
 
     range_start = 0
-    range_end = 53
+    range_end = 54
+    special_range_names = {
+        "not_for_goal": 0,
+        "all_base_actions": 37,
+        "default": 40,
+        "max": range_end
+    }
     default = 40
 
 
@@ -46,18 +51,42 @@ class RandomizeEnemyDeath(Toggle):
     display_name = "Randomize Enemy Death"
 
 
+class CompletionShape(FreeText):
+    """
+    The extra shape that you will need to scan to goal, after all other requirements.
+    If left blank, there is no ending shape needed. This must be either in binary or hexadecimal (starting with '0x' for hex, and either nothing or '0b' for binary) formats.
+    """
+
+    display_name = "Completion Shape"
+
+    default = ""
+
+
+class NeededPatterns(OptionSet):
+    """
+    The extra patterns needed to goal. If left empty, none are needed.
+    These must be either in binary or hexadecimal (starting with '0x' for hex, and either nothing or '0b' for binary) formats.
+    """
+
+    display_name = "Needed Patterns"
+
+    default = []
+
+
 @dataclass
 class PixelDrawOptions(PerGameCommonOptions):
     trap_chance: TrapChance
     death_link: DeathLink
     randomize_enemy_deaths: RandomizeEnemyDeath
     actions_needed: ActionsNeeded
+    completion_shape: CompletionShape
+    needed_patterns: NeededPatterns
 
 
 option_groups = [
     OptionGroup(
         "Gameplay Options",
-        [TrapChance, DeathLink, RandomizeEnemyDeath, ActionsNeeded],
+        [TrapChance, DeathLink, RandomizeEnemyDeath, ActionsNeeded, CompletionShape, NeededPatterns],
     ),
 ]
 
@@ -67,11 +96,15 @@ option_presets = {
         "death_link": False,
         "randomize_enemy_deaths": False,
         "actions_needed": 40,
+        "completion_shape": "",
+        "needed_patterns": [],
     },
     "harder": {
         "trap_chance": 50,
         "death_link": True,
         "randomize_enemy_deaths": True,
         "actions_needed": 50,
+        "completion_shape": "0xfec68aba9ac6fe",
+        "needed_patterns": [],
     },
 }

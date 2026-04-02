@@ -8,12 +8,12 @@
 
 ## How to play
 
-Download "pixeldraw.apworld" and the archipelago launcher \
+Download "pixeldraw.apworld" (if you want the stable one, download "stable.zip" and get it from there instead) and the archipelago launcher \
 Either open the downloaded "pixeldraw.apworld" or the "Install APWorld" option in the launcher. \
 You can then open the "Options Creator" and select "PixelDraw" from the list to generate an options file (yaml). \
 Once you fill out the file, click "Export Options" and save it to the "Players" folder in the archipelago directory (C:\ProgramData\Archipelago\Players on windows). \
 After this, open the "Generate" option and wait for it to complete. \
-Click the "Host" option, wait for it to complete (do not close the terminal) and then open your game file according to the instructions above (however, it is recommended to open the ".console.exe" instead so you can see server messages). \
+Click the "Host" option, wait for it to complete (do not close the terminal) and then open your game file according to the instructions on the itch page (however, it is recommended to open the ".console.exe" instead so you can see server messages). \
 Once you open the game, open the menu and choose the "Archipelago" tab. \
 Enter the appropriate ip in the "IP" box: \
 

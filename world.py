@@ -43,5 +43,6 @@ class PixelDrawWorld(World):
 
     def fill_slot_data(self) -> Mapping[str, Any]:
         return self.options.as_dict(
-            "trap_chance", "death_link", "randomize_enemy_deaths", "actions_needed"
+            "trap_chance", "death_link", "randomize_enemy_deaths", "actions_needed",
+            "completion_shape", "needed_patterns"
         )

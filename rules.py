@@ -98,6 +98,7 @@ def set_all_location_rules(world: PixelDrawWorld) -> None:
     set_rule(world.get_location("10_TRI"), lambda state: (five_size(state) or state.has("5_TRI",world.player)) and manipulators(state))
     set_rule(world.get_location("12_DIA"), lambda state: five_size(state) and manipulators(state))
     set_rule(world.get_location("PLAGUE"), lambda state: (five_size(state) or state.has_any(["5_SQC"], world.player)) and manipulators(state))
+    set_rule(world.get_location("MAZER"), lambda state: state.has("16_SQR",world.player) and manipulators(state))
 
     if world.options.randomize_enemy_deaths:
         set_rule(world.get_location("RED_PILL"), lambda state: (four_size(state) or state.has_any(["5_SQC","5_TRI"], world.player)) and manipulators(state) and state.has("BASE_SW",world.player))
