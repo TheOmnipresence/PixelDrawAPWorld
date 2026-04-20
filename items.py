@@ -4,6 +4,8 @@ from typing import TYPE_CHECKING
 
 from BaseClasses import Item, ItemClassification
 
+from .locations import CHIP_LOCATIONS, NORMAL_LOCATIONS
+
 if TYPE_CHECKING:
     from .world import PixelDrawWorld
 
@@ -27,7 +29,7 @@ ITEM_NAME_TO_ID = {
     "SUMMON": 16,
     "TERRAIN": 17,
     "PARALYZER": 18,
-    "PLATFORMS": 19,
+    "PLATFORM": 19,
     "PLAGUE": 20,
     "MAZER": 21,
 
@@ -49,7 +51,8 @@ ITEM_NAME_TO_ID = {
     "7_SQC": 1017,
     "8_CIR": 1018,
     "10_TRI": 1019,
-    "12_DIA": 1020,
+    "11_DIA": 1020,
+    "6/4_RECT": 1021,
 
     #"CREEPER": 2001,
     #"RESPAWN": 2002,
@@ -99,7 +102,11 @@ ITEM_NAME_TO_ID = {
     #"SCALE_DOWN": 2046,
     #"MED_SPEED": 2047,
 
-    "RANDOM_ACTION":3000
+    "RANDOM_ACTION": 3000,
+    "RANDOM_ENEMY": 3001,
+    "COMPATIBILITY_CHIP": 3002,
+
+    "MC_INVENTORY":4000,
 }
 
 # Items should have a defined default classification.
@@ -121,8 +128,9 @@ DEFAULT_ITEM_CLASSIFICATIONS = {
     "SUMMON": ItemClassification.useful,
     "TERRAIN": ItemClassification.useful,
     "PARALYZER": ItemClassification.useful,
-    "PLATFORMS": ItemClassification.progression,
+    "PLATFORM": ItemClassification.progression,
     "PLAGUE": ItemClassification.progression,
+    "MAZER": ItemClassification.useful,
 
     "5_SQR": ItemClassification.progression,
     "6_SQR": ItemClassification.progression,
@@ -142,10 +150,14 @@ DEFAULT_ITEM_CLASSIFICATIONS = {
     "7_SQC": ItemClassification.useful,
     "8_CIR": ItemClassification.useful,
     "10_TRI": ItemClassification.useful,
-    "12_DIA": ItemClassification.useful,
+    "11_DIA": ItemClassification.useful,
+    "6/4_RECT": ItemClassification.useful,
 
     "RANDOM_ACTION": ItemClassification.filler,
     "RANDOM_ENEMY": ItemClassification.trap,
+    "COMPATIBILITY_CHIP": ItemClassification.useful,
+
+    "MC_INVENTORY": ItemClassification.useful,
 }
 
 
@@ -164,9 +176,18 @@ def create_item_with_correct_classification(world: PixelDrawWorld, name: str) ->
 
 
 def create_all_items(world: PixelDrawWorld) -> None:
-    baseitempool = ["C_GOL","RAISER","LEVELER","DUSTER","SHUFFLER","STOPPER","BULB","MC_PICK","HOOK","BASE_SW","PLACER","STAMPER","GRAVITATE","SUMMON","TERRAIN","PARALYZER","PLATFORMS","PLAGUE","5_SQR","6_SQR","SM_DIA","5_PLUS","3_DIAG","3_DIAG_IN","7_LINE","5_SQC","10_SQR","5_DIAG","16_SQR","5_TRI","50_SQR","7_LOOP","7_SQC","8_CIR","10_TRI","12_DIA"]
+    baseitempool = list(NORMAL_LOCATIONS.keys())
+    otheritems = []
+
+    if world.options.randomize_compatibility_chips:
+        for i in range(len(CHIP_LOCATIONS)):
+            otheritems.append("COMPATIBILITY_CHIP")
+    if world.options.randomize_salesmen:
+        for i in range(7):
+            otheritems.append("MC_INVENTORY")
+
     itempool: list[Item] = []
-    for item in baseitempool:
+    for item in baseitempool + otheritems:
         itempool.append(world.create_item(item))
 
     number_of_items = len(itempool)
@@ -174,6 +195,13 @@ def create_all_items(world: PixelDrawWorld) -> None:
     number_of_unfilled_locations = len(world.multiworld.get_unfilled_locations(world.player))
 
     needed_number_of_filler_items = number_of_unfilled_locations - number_of_items
+
+    if world.options.randomize_compatibility_chips and world.options.additional_compatibility_chips > 0 and needed_number_of_filler_items > 0:
+        for _ in range(world.options.additional_compatibility_chips):
+            needed_number_of_filler_items -= 1
+            itempool.append(world.create_item("COMPATIBILITY_CHIP"))
+            if needed_number_of_filler_items <= 0:
+                break
 
     itempool += [world.create_filler() for _ in range(needed_number_of_filler_items)]
 
