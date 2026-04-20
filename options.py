@@ -23,14 +23,14 @@ class ActionsNeeded(NamedRange):
     display_name = "Actions Needed"
 
     range_start = 0
-    range_end = 54
+    range_end = 60
     special_range_names = {
         "not_for_goal": 0,
         "all_base_actions": 37,
-        "default": 40,
+        "default": 45,
         "max": range_end
     }
-    default = 40
+    default = 45
 
 
 class DeathLink(Toggle):
@@ -49,6 +49,39 @@ class RandomizeEnemyDeath(Toggle):
     """
 
     display_name = "Randomize Enemy Death"
+
+
+class RandomizeCompatibilityChips(Toggle):
+    """
+    Randomizes compatibility chips.
+    Each action that gets you them has as many checks as it would have chips normally.
+    Each chip is an item.
+    """
+
+    display_name = "Randomize Compatibility Chips"
+    default = False
+
+
+class AdditionalCompatibilityChips(Range):
+    """
+    Adds x amount of extra compatibility chips to the item pool (if there are not enough locations left, it will cut off).
+    This only matters if compatibility chips are randomized.
+    """
+
+    display_name = "Additional Compatibility Chips"
+    default = 0
+
+    range_start = 0
+    range_end = 20
+
+
+class RandomizeSalesmen(Toggle):
+    """
+    Randomizes salesmen items, aside from currency conversion.
+    """
+
+    display_name = "Randomize Salesmen"
+    default = False
 
 
 class CompletionShape(FreeText):
@@ -78,6 +111,9 @@ class PixelDrawOptions(PerGameCommonOptions):
     trap_chance: TrapChance
     death_link: DeathLink
     randomize_enemy_deaths: RandomizeEnemyDeath
+    randomize_compatibility_chips: RandomizeCompatibilityChips
+    additional_compatibility_chips: AdditionalCompatibilityChips
+    randomize_salesmen: RandomizeSalesmen
     actions_needed: ActionsNeeded
     completion_shape: CompletionShape
     needed_patterns: NeededPatterns
@@ -86,8 +122,12 @@ class PixelDrawOptions(PerGameCommonOptions):
 option_groups = [
     OptionGroup(
         "Gameplay Options",
-        [TrapChance, DeathLink, RandomizeEnemyDeath, ActionsNeeded, CompletionShape, NeededPatterns],
+        [TrapChance, DeathLink, RandomizeEnemyDeath, RandomizeCompatibilityChips, AdditionalCompatibilityChips, RandomizeSalesmen],
     ),
+    OptionGroup(
+        "Goal Requirements",
+        [ActionsNeeded, CompletionShape, NeededPatterns],
+    )
 ]
 
 option_presets = {
@@ -95,6 +135,9 @@ option_presets = {
         "trap_chance": 0,
         "death_link": False,
         "randomize_enemy_deaths": False,
+        "randomize_compatibility_chips": False,
+        "additional_compatibility_chips": 0,
+        "randomize_salesmen": False,
         "actions_needed": 40,
         "completion_shape": "",
         "needed_patterns": [],
@@ -103,6 +146,9 @@ option_presets = {
         "trap_chance": 50,
         "death_link": True,
         "randomize_enemy_deaths": True,
+        "randomize_compatibility_chips": True,
+        "additional_compatibility_chips": 0,
+        "randomize_salesmen": True,
         "actions_needed": 50,
         "completion_shape": "0xfec68aba9ac6fe",
         "needed_patterns": [],
