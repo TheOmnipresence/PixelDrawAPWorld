@@ -182,9 +182,9 @@ def set_all_location_rules(world: PixelDrawWorld) -> None:
     item_logic.set_pattern_logic("SM_DIA",5,["5_SQC"])
     item_logic.set_pattern_logic("5_PLUS",5,["5_PLUS","5_SQC"])
     item_logic.set_pattern_logic("BULB",5,["5_SQC"])
-    item_logic.set_pattern_logic("MC_PICK",4)
+    item_logic.set_pattern_logic("MC_PICK",4,["5_SQC"])
     item_logic.set_pattern_logic("7_LINE",5,["5_PLUS","7_LINE","5_SQC","5_TRI","7_LOOP","6/4_RECT"])
-    item_logic.set_pattern_logic("5_SQC",4,["5_SQC"])
+    item_logic.set_pattern_logic("5_SQC",4,["5_SQC","5_TRI"])
     item_logic.set_pattern_logic("10_SQR",6)
     item_logic.set_pattern_logic("16_SQR",8)
     item_logic.set_pattern_logic("STAMPER",8)
@@ -192,12 +192,12 @@ def set_all_location_rules(world: PixelDrawWorld) -> None:
     item_logic.set_pattern_logic("50_SQR",5)
     item_logic.set_pattern_logic("7_LOOP",5)
     item_logic.set_pattern_logic("PLATFORM",5)
-    item_logic.set_pattern_logic("8_CIR",4)
-    item_logic.set_pattern_logic("10_TRI",5,["5_TRI","5_SQC"])
+    item_logic.set_pattern_logic("8_CIR",4,["5_SQC","5_TRI"])
+    item_logic.set_pattern_logic("10_TRI",5,["5_TRI","5_SQC","6/4_RECT"])
     item_logic.set_pattern_logic("11_DIA",5)
     item_logic.set_pattern_logic("PLAGUE",5,["5_SQC"])
     item_logic.set_pattern_logic("MAZER",13)
-    item_logic.set_pattern_logic("6/4_RECT",4)
+    item_logic.set_pattern_logic("6/4_RECT",4,["5_SQC","5_TRI"])
 
     if world.options.randomize_salesmen:
         for i in SHOP_LOCATIONS:

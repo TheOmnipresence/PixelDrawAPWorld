@@ -43,6 +43,18 @@ class DeathLink(Toggle):
     default = 0
 
 
+class DeathLinkAmnesty(Range):
+    """
+    The amount of deaths required to send a deathlink.
+    """
+
+    display_name = "Death Link Amnesty"
+
+    range_start = 1
+    range_end = 20
+    default = 1
+
+
 class RandomizeEnemyDeath(Toggle):
     """
     Adds locations for killing enemies.
@@ -117,12 +129,13 @@ class PixelDrawOptions(PerGameCommonOptions):
     actions_needed: ActionsNeeded
     completion_shape: CompletionShape
     needed_patterns: NeededPatterns
+    death_link_amnesty: DeathLinkAmnesty
 
 
 option_groups = [
     OptionGroup(
         "Gameplay Options",
-        [TrapChance, DeathLink, RandomizeEnemyDeath, RandomizeCompatibilityChips, AdditionalCompatibilityChips, RandomizeSalesmen],
+        [TrapChance, DeathLink, DeathLinkAmnesty, RandomizeEnemyDeath, RandomizeCompatibilityChips, AdditionalCompatibilityChips, RandomizeSalesmen],
     ),
     OptionGroup(
         "Goal Requirements",
@@ -134,6 +147,7 @@ option_presets = {
     "normal": {
         "trap_chance": 0,
         "death_link": False,
+        "death_link_amnesty": 1,
         "randomize_enemy_deaths": False,
         "randomize_compatibility_chips": False,
         "additional_compatibility_chips": 0,
@@ -145,6 +159,7 @@ option_presets = {
     "harder": {
         "trap_chance": 50,
         "death_link": True,
+        "death_link_amnesty": 1,
         "randomize_enemy_deaths": True,
         "randomize_compatibility_chips": True,
         "additional_compatibility_chips": 0,
