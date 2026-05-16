@@ -23,7 +23,7 @@ class ActionsNeeded(NamedRange):
     display_name = "Actions Needed"
 
     range_start = 0
-    range_end = 60
+    range_end = 69
     special_range_names = {
         "not_for_goal": 0,
         "all_base_actions": 37,
@@ -43,6 +43,18 @@ class DeathLink(Toggle):
     default = 0
 
 
+class DeathLinkAmnesty(Range):
+    """
+    The amount of deaths required to send a deathlink.
+    """
+
+    display_name = "Death Link Amnesty"
+
+    range_start = 1
+    range_end = 20
+    default = 1
+
+
 class RandomizeEnemyDeath(Toggle):
     """
     Adds locations for killing enemies.
@@ -59,7 +71,7 @@ class RandomizeCompatibilityChips(Toggle):
     """
 
     display_name = "Randomize Compatibility Chips"
-    default = False
+    default = True
 
 
 class AdditionalCompatibilityChips(Range):
@@ -81,6 +93,15 @@ class RandomizeSalesmen(Toggle):
     """
 
     display_name = "Randomize Salesmen"
+    default = False
+
+
+class RandomizeBlueprints(Toggle):
+    """
+    Randomizes blueprints
+    """
+
+    display_name = "Randomize Blueprints"
     default = False
 
 
@@ -114,15 +135,17 @@ class PixelDrawOptions(PerGameCommonOptions):
     randomize_compatibility_chips: RandomizeCompatibilityChips
     additional_compatibility_chips: AdditionalCompatibilityChips
     randomize_salesmen: RandomizeSalesmen
+    randomize_blueprints: RandomizeBlueprints
     actions_needed: ActionsNeeded
     completion_shape: CompletionShape
     needed_patterns: NeededPatterns
+    death_link_amnesty: DeathLinkAmnesty
 
 
 option_groups = [
     OptionGroup(
         "Gameplay Options",
-        [TrapChance, DeathLink, RandomizeEnemyDeath, RandomizeCompatibilityChips, AdditionalCompatibilityChips, RandomizeSalesmen],
+        [TrapChance, DeathLink, DeathLinkAmnesty, RandomizeEnemyDeath, RandomizeCompatibilityChips, AdditionalCompatibilityChips, RandomizeSalesmen, RandomizeBlueprints],
     ),
     OptionGroup(
         "Goal Requirements",
@@ -134,10 +157,12 @@ option_presets = {
     "normal": {
         "trap_chance": 0,
         "death_link": False,
+        "death_link_amnesty": 1,
         "randomize_enemy_deaths": False,
-        "randomize_compatibility_chips": False,
+        "randomize_compatibility_chips": True,
         "additional_compatibility_chips": 0,
         "randomize_salesmen": False,
+        "randomize_blueprints": False,
         "actions_needed": 40,
         "completion_shape": "",
         "needed_patterns": [],
@@ -145,10 +170,12 @@ option_presets = {
     "harder": {
         "trap_chance": 50,
         "death_link": True,
+        "death_link_amnesty": 1,
         "randomize_enemy_deaths": True,
         "randomize_compatibility_chips": True,
         "additional_compatibility_chips": 0,
         "randomize_salesmen": True,
+        "randomize_blueprints": True,
         "actions_needed": 50,
         "completion_shape": "0xfec68aba9ac6fe",
         "needed_patterns": [],
