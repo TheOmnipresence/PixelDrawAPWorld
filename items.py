@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING
 
 from BaseClasses import Item, ItemClassification
 
-from .locations import CHIP_LOCATIONS, NORMAL_LOCATIONS
+from .locations import CHIP_LOCATIONS, NORMAL_LOCATIONS, BLUEPRINT_LOCATIONS
 
 if TYPE_CHECKING:
     from .world import PixelDrawWorld
@@ -53,6 +53,26 @@ ITEM_NAME_TO_ID = {
     "10_TRI": 1019,
     "11_DIA": 1020,
     "6/4_RECT": 1021,
+    "4_LOOP": 1022,
+	"6_DIAG": 1023,
+	"5_DIA": 1024,
+	"7_PLUS": 1025,
+	"4_TRI": 1026,
+	"3/7_RECT": 1027,
+	"9_SQC": 1028,
+	"12_LINE": 1029,
+	"7/11_SQC": 1030,
+	"8/4_TRI": 1031,
+	"7_X": 1032,
+	"5_X": 1033,
+	"6_SEMI": 1034,
+	"9_QUAD": 1035,
+	"11_OCTO": 1036,
+	"8_ISOS": 1037,
+	"13_AST": 1038,
+	"12_RING": 1039,
+	"6_TRAP": 1040,
+	"20_HEX": 1041,
 
     #"CREEPER": 2001,
     #"RESPAWN": 2002,
@@ -105,59 +125,95 @@ ITEM_NAME_TO_ID = {
     "RANDOM_ACTION": 3000,
     "RANDOM_ENEMY": 3001,
     "COMPATIBILITY_CHIP": 3002,
+    "FLASHBANG_TRAP": 3003,
 
     "MC_INVENTORY":4000,
+
+    "BLUEPRINT_BOOK": 5000,
+    "BLUEPRINT_DIAMOND": 5001,
+    "BLUEPRINT_NETHERITE": 5002,
+    "BLUEPRINT_FREE_CHIPS": 5003,
+    "BLUEPRINT_TOOL_COLOR": 5004,
+    "BLUEPRINT_WEAKEN_BOUNDS": 5005,
+    "BLUEPRINT_CHIP_PACK_5": 5006,
 }
 
-# Items should have a defined default classification.
-# In our case, we will make a dictionary from item name to classification.
 DEFAULT_ITEM_CLASSIFICATIONS = {
     "C_GOL": ItemClassification.progression,
-    "RAISER": ItemClassification.useful,
-    "LEVELER": ItemClassification.useful,
+    "RAISER": ItemClassification.progression,
+    "LEVELER": ItemClassification.progression,
     "DUSTER": ItemClassification.progression,
     "SHUFFLER": ItemClassification.progression,
-    "STOPPER": ItemClassification.useful,
-    "BULB": ItemClassification.useful,
+    "STOPPER": ItemClassification.progression,
+    "BULB": ItemClassification.progression,
     "MC_PICK": ItemClassification.progression,
-    "HOOK": ItemClassification.useful,
+    "HOOK": ItemClassification.progression,
     "BASE_SW": ItemClassification.progression,
     "PLACER": ItemClassification.progression,
     "STAMPER": ItemClassification.progression,
-    "GRAVITATE": ItemClassification.useful,
-    "SUMMON": ItemClassification.useful,
-    "TERRAIN": ItemClassification.useful,
-    "PARALYZER": ItemClassification.useful,
+    "GRAVITATE": ItemClassification.progression,
+    "SUMMON": ItemClassification.progression,
+    "TERRAIN": ItemClassification.progression,
+    "PARALYZER": ItemClassification.progression,
     "PLATFORM": ItemClassification.progression,
     "PLAGUE": ItemClassification.progression,
-    "MAZER": ItemClassification.useful,
+    "MAZER": ItemClassification.progression,
 
     "5_SQR": ItemClassification.progression,
     "6_SQR": ItemClassification.progression,
-    "SM_DIA": ItemClassification.useful,
-    "5_PLUS": ItemClassification.useful,
-    "3_DIAG": ItemClassification.useful,
-    "3_DIAG_IN": ItemClassification.useful,
-    "7_LINE": ItemClassification.useful,
-    "5_SQC": ItemClassification.useful,
+    "SM_DIA": ItemClassification.progression,
+    "5_PLUS": ItemClassification.progression,
+    "3_DIAG": ItemClassification.progression,
+    "3_DIAG_IN": ItemClassification.progression,
+    "7_LINE": ItemClassification.progression,
+    "5_SQC": ItemClassification.progression,
     "10_SQR": ItemClassification.progression,
     "5_DIAG": ItemClassification.progression,
     "16_SQR": ItemClassification.progression,
-    "5_TRI": ItemClassification.useful,
+    "5_TRI": ItemClassification.progression,
     "50_SQR": ItemClassification.progression,
     # "200_SQR": ItemClassification.progression,
-    "7_LOOP": ItemClassification.useful,
-    "7_SQC": ItemClassification.useful,
-    "8_CIR": ItemClassification.useful,
-    "10_TRI": ItemClassification.useful,
-    "11_DIA": ItemClassification.useful,
-    "6/4_RECT": ItemClassification.useful,
+    "7_LOOP": ItemClassification.progression,
+    "7_SQC": ItemClassification.progression,
+    "8_CIR": ItemClassification.progression,
+    "10_TRI": ItemClassification.progression,
+    "11_DIA": ItemClassification.progression,
+    "6/4_RECT": ItemClassification.progression,
+    "4_LOOP": ItemClassification.progression,
+	"6_DIAG": ItemClassification.progression,
+	"5_DIA": ItemClassification.progression,
+	"7_PLUS": ItemClassification.progression,
+	"4_TRI": ItemClassification.progression,
+	"3/7_RECT": ItemClassification.progression,
+	"9_SQC": ItemClassification.progression,
+	"12_LINE": ItemClassification.progression,
+	"7/11_SQC": ItemClassification.progression,
+	"8/4_TRI": ItemClassification.progression,
+	"7_X": ItemClassification.progression,
+	"5_X": ItemClassification.progression,
+	"6_SEMI": ItemClassification.progression,
+	"9_QUAD": ItemClassification.progression,
+	"11_OCTO": ItemClassification.progression,
+	"8_ISOS": ItemClassification.progression,
+	"13_AST": ItemClassification.progression,
+	"12_RING": ItemClassification.progression,
+	"6_TRAP": ItemClassification.progression,
+	"20_HEX": ItemClassification.progression,
 
     "RANDOM_ACTION": ItemClassification.filler,
     "RANDOM_ENEMY": ItemClassification.trap,
-    "COMPATIBILITY_CHIP": ItemClassification.useful,
+    "FLASHBANG_TRAP": ItemClassification.trap,
+    "COMPATIBILITY_CHIP": ItemClassification.progression,
 
     "MC_INVENTORY": ItemClassification.useful,
+
+    "BLUEPRINT_BOOK": ItemClassification.progression,
+    "BLUEPRINT_DIAMOND": ItemClassification.progression,
+    "BLUEPRINT_NETHERITE": ItemClassification.progression,
+    "BLUEPRINT_FREE_CHIPS": ItemClassification.progression,
+    "BLUEPRINT_TOOL_COLOR": ItemClassification.progression,
+    "BLUEPRINT_WEAKEN_BOUNDS": ItemClassification.progression,
+    "BLUEPRINT_CHIP_PACK_5": ItemClassification.progression,
 }
 
 
@@ -167,7 +223,11 @@ class PixelDrawItem(Item):
 
 def get_random_filler_item_name(world: PixelDrawWorld) -> str:
     if world.random.randint(0, 99) < world.options.trap_chance:
-        return "RANDOM_ENEMY"
+        match world.random.randint(0, 1):
+            case 0:
+                return "RANDOM_ENEMY"
+            case 1:
+                return "FLASHBANG_TRAP"
     return "RANDOM_ACTION"
 
 
@@ -185,6 +245,9 @@ def create_all_items(world: PixelDrawWorld) -> None:
     if world.options.randomize_salesmen:
         for i in range(7):
             otheritems.append("MC_INVENTORY")
+    if world.options.randomize_blueprints:
+        for i in BLUEPRINT_LOCATIONS.keys():
+            otheritems.append(i)
 
     itempool: list[Item] = []
     for item in baseitempool + otheritems:

@@ -6,12 +6,12 @@ from BaseClasses import ItemClassification, Location
 
 from . import items
 
+# from .rules import ItemLogic, get_chip_index
+
 if TYPE_CHECKING:
     from .world import PixelDrawWorld
 
-# Every location must have a unique integer ID associated with it.
-# We will have a lookup from location name to ID here that, in world.py, we will import and bind to the world class.
-# Even if a location doesn't exist on specific options, it must be present in this lookup.
+
 def add_dicts(dictionaries:list[dict]) -> dict:
     result = {}
     for dictionary in dictionaries:
@@ -63,6 +63,27 @@ SHAPE_LOCATIONS = {
     "10_TRI": 1019,
     "11_DIA": 1020,
     "6/4_RECT": 1021,
+
+    "4_LOOP": 1022,
+	"6_DIAG": 1023,
+	"5_DIA": 1024,
+	"7_PLUS": 1025,
+	"4_TRI": 1026,
+	"3/7_RECT": 1027,
+	"9_SQC": 1028,
+	"12_LINE": 1029,
+	"7/11_SQC": 1030,
+	"8/4_TRI": 1031,
+	"7_X": 1032,
+	"5_X": 1033,
+	"6_SEMI": 1034,
+	"9_QUAD": 1035,
+	"11_OCTO": 1036,
+	"8_ISOS": 1037,
+	"13_AST": 1038,
+	"12_RING": 1039,
+	"6_TRAP": 1040,
+	"20_HEX": 1041,
 }
 
 NORMAL_LOCATIONS = add_dicts([TOOL_LOCATIONS,SHAPE_LOCATIONS])
@@ -75,15 +96,32 @@ ENEMY_LOCATIONS = {
 }
 
 CHIP_LOCATIONS = {
-    "CHIP_PACK_1": 3000,
+    "CHIP_PACK_1-1": 3000,
+
     "CHIP_PACK_2-1": 3001,
     "CHIP_PACK_2-2": 3002,
+
+    "CHIP_PACK_3-1": 3003,
+    "CHIP_PACK_3-2": 3004,
+    "CHIP_PACK_3-3": 3005,
+
+    "CHIP_PACK_4-1": 3006,
+    "CHIP_PACK_4-2": 3007,
+    "CHIP_PACK_4-3": 3008,
+    "CHIP_PACK_4-4": 3009,
+
+    "CHIP_PACK_5-1": 3010,
+    "CHIP_PACK_5-2": 3011,
+    "CHIP_PACK_5-3": 3012,
+    "CHIP_PACK_5-4": 3013,
+    "CHIP_PACK_5-5": 3014,
 }
 
 SHOP_LOCATIONS = {
 	"CUBIC_SALESMAN_ITEM_1":4000,
 	"CUBIC_SALESMAN_ITEM_2":4001,
 	"CUBIC_SALESMAN_ITEM_3":4002,
+
 	"MINECRAFT_USER_ITEM_1":4003,
 	"MINECRAFT_USER_ITEM_2":4004,
 	"MINECRAFT_USER_ITEM_3-1":4005,
@@ -95,7 +133,18 @@ SHOP_LOCATIONS = {
 	"MINECRAFT_USER_ITEM_3-7":4011,
 }
 
-LOCATION_NAME_TO_ID : dict[str, int | None] = add_dicts([NORMAL_LOCATIONS,ENEMY_LOCATIONS,CHIP_LOCATIONS,SHOP_LOCATIONS])
+BLUEPRINT_LOCATIONS = {
+    "BLUEPRINT_BOOK": 5000,
+
+    "BLUEPRINT_DIAMOND": 5001,
+    "BLUEPRINT_NETHERITE": 5002,
+    "BLUEPRINT_FREE_CHIPS": 5003,
+    "BLUEPRINT_TOOL_COLOR": 5004,
+    "BLUEPRINT_WEAKEN_BOUNDS": 5005,
+    "BLUEPRINT_CHIP_PACK_5": 5006,
+}
+
+LOCATION_NAME_TO_ID : dict[str, int | None] = add_dicts([NORMAL_LOCATIONS,ENEMY_LOCATIONS,CHIP_LOCATIONS,SHOP_LOCATIONS,BLUEPRINT_LOCATIONS])
 
 
 class PixelDrawLocation(Location):
@@ -121,6 +170,8 @@ def create_regular_locations(world: PixelDrawWorld) -> None:
         plane.add_locations(CHIP_LOCATIONS, PixelDrawLocation)
     if world.options.randomize_salesmen:
         plane.add_locations(SHOP_LOCATIONS, PixelDrawLocation)
+    if world.options.randomize_blueprints:
+        plane.add_locations(BLUEPRINT_LOCATIONS, PixelDrawLocation)
 
 
 def create_events(world: PixelDrawWorld) -> None:
